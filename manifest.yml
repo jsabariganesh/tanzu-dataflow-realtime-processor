@@ -1,0 +1,24 @@
+---
+applications:
+  - name: dataflow-realtime-processor
+    buildpacks:
+      - java_buildpack_offline
+    memory: 1G
+    instances: 1
+    path: target/dataflow-realtime-processor-0.0.1-SNAPSHOT.jar
+    services:
+      - mysql
+      - rabbitmq
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ } }'
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: 'health,metrics,prometheus,info'
+      TANZU_METRICS_JVM_ENABLED: 'true'
+      TANZU_METRICS_JVM_ENDPOINT: 'https://otel-collector:9565/v1/metrics'
+      TANZU_METRICS_CUSTOM_ENABLED: 'true'
+      TANZU_METRICS_CUSTOM_ENDPOINT: 'https://otel-collector:9566/v1/metrics'
+      DATAFLOW_STREAM_NAME: 'realtime-orders'
+      DATAFLOW_APP_NAME: 'order-processor'
+      DATAFLOW_APP_TYPE: 'processor'
+    routes:
+      - route: dataflow-realtime-processor.apps.internal
+      - route: dataflow-realtime-processor.apps.tanzu.lab
