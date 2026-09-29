@@ -1,4 +1,4 @@
-# DataFlow Realtime Processor
+# Tanzu DataFlow Realtime Processor
 
 A cloud-native Spring Boot real-time streaming processor designed for Tanzu Platform and VMware Tanzu Application Service (TAS).
 
